@@ -14,7 +14,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp",
+    options.AddPolicy("AllowApp",
         policy =>
         {
             policy.AllowAnyOrigin()
@@ -36,8 +36,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    //db.Database.EnsureCreated();
-    db.Database.Migrate();
+    db.Database.EnsureCreated();
+    //db.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
@@ -45,7 +45,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowApp");
 
 app.UseHttpsRedirection();
 
