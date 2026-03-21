@@ -35,7 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
 //create DB Automatically
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     try
     {
@@ -48,8 +48,9 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine("DB ERROR: " + ex.Message);
         throw;
     }
-}
+}*/
 
+app.MapGet("/", () => "App is running");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
