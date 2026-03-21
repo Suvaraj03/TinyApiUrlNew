@@ -29,13 +29,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    //options.UseSqlite("Data Source=urls.db"));
-    options.UseSqlite("Data Source=/home/site/wwwroot/urls.db"));
+    options.UseSqlite("Data Source=urls.db"));
+   // options.UseSqlite("Data Source=/home/site/wwwroot/urls.db"));
 
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
 //create DB Automatically
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     try
     {
@@ -48,9 +48,9 @@ app.UseDeveloperExceptionPage();
         Console.WriteLine("DB ERROR: " + ex.Message);
         throw;
     }
-}*/
+}
 
-app.MapGet("/", () => "App is running");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
