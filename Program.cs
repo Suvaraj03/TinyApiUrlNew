@@ -28,9 +28,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+var dbPath = Path.Combine(
+    Environment.GetEnvironmentVariable("HOME") ?? "",
+    "data",
+    "urls.db");
+
+Directory.CreateDirectory(Path.GetDirectoryName(dbPath)!);
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=urls.db"));
+   //options.UseSqlite("Data Source=urls.db"));
    // options.UseSqlite("Data Source=/home/site/wwwroot/urls.db"));
+   options.UseSqlite($"Data Source={dbPath}"));
+
 
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
