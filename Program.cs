@@ -25,8 +25,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+
 
 var dbPath = Path.Combine(
     Environment.GetEnvironmentVariable("HOME") ?? "",
@@ -41,7 +40,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 var app = builder.Build();
-app.UseDeveloperExceptionPage();
+
 //create DB Automatically
 using (var scope = app.Services.CreateScope())
 {
@@ -62,6 +61,7 @@ using (var scope = app.Services.CreateScope())
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -71,10 +71,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.Urls.Add("http://0.0.0.0:80");
+//app.Urls.Add("http://0.0.0.0:80");
 
 app.MapControllers();
-var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
-app.Urls.Add($"http://*:{port}");
+//var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+//app.Urls.Add($"http://*:{port}");
 
 app.Run();
