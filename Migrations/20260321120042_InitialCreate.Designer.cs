@@ -11,14 +11,14 @@ using TinyApiUrl.Data;
 namespace TinyApiUrl.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260320120844_InitialCreate")]
+    [Migration("20260321120042_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
             modelBuilder.Entity("TinyApiUrl.Entity.Url", b =>
                 {
