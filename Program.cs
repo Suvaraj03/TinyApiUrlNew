@@ -51,6 +51,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.Urls.Add("http://0.0.0.0:80");
+
 app.MapControllers();
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 app.Urls.Add($"http://*:{port}");
