@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowApp",
         policy =>
         {
-            policy.WithOrigins("https://calm-ocean-02b74a61e.4.azurestaticapps.net/")
+            policy.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
