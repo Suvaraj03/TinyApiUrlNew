@@ -152,21 +152,49 @@ namespace TinyApiUrl.Services
             return true;
         }
 
-        public async Task<List<UrlResponse>> SearchAsync(string query)
+        /*public async Task<List<UrlResponse>> SearchAsync(string query)
         {
+            if (string.IsNullOrWhiteSpace(query))
+                return new List<UrlResponse>();
+
+            query = query.Trim();
+
             var urls = await _db.Urls
-                .Where(x => x.OriginalUrl.Contains(query) || x.ShortCode.Contains(query))
+                .Where(x =>
+                 x.ShortCode.ToLower() == query.ToLower() ||
+                 x.OriginalUrl.ToLower() == query.ToLower()
+)
                 .ToListAsync();
 
             return urls.Select(u => new UrlResponse
             {
                 Id = u.Id,
                 OriginalUrl = u.OriginalUrl,
-                ShortUrl = u.ShortCode,
+                ShortUrl = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}/{u.ShortCode}",
+                ClickCount = u.ClickCount
+            }).ToList();
+        }*/
+        public async Task<List<UrlResponse>> SearchAsync(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return new List<UrlResponse>();
+
+            query = query.Trim().ToLower();
+
+            var urls = await _db.Urls
+                .Where(x => x.ShortCode.ToLower() == query)
+                .ToListAsync();
+
+            var baseUrl = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}";
+
+            return urls.Select(u => new UrlResponse
+            {
+                Id = u.Id,
+                OriginalUrl = u.OriginalUrl,
+                ShortUrl = $"{baseUrl}/{u.ShortCode}",
                 ClickCount = u.ClickCount
             }).ToList();
         }
-
         /*  public async Task<List<UrlResponse>> SearchAsync(string query)
           {
               var urlsQuery = _db.Urls
