@@ -152,7 +152,7 @@ namespace TinyApiUrl.Services
             return true;
         }
 
-        /*public async Task<List<UrlResponse>> SearchAsync(string query)
+        public async Task<List<UrlResponse>> SearchAsync(string query)
         {
             var urls = await _db.Urls
                 .Where(x => x.OriginalUrl.Contains(query) || x.ShortCode.Contains(query))
@@ -165,23 +165,23 @@ namespace TinyApiUrl.Services
                 ShortUrl = u.ShortCode,
                 ClickCount = u.ClickCount
             }).ToList();
-        }*/
-
-        public async Task<List<UrlResponse>> SearchAsync(string query)
-        {
-            var urlsQuery = _db.Urls
-                .Where(x => !x.IsPrivate); // don't expose private
-
-            if (!string.IsNullOrWhiteSpace(query))
-            {
-                urlsQuery = urlsQuery
-                    .Where(x => x.OriginalUrl.Contains(query));
-            }
-
-            var urls = await urlsQuery.ToListAsync();
-
-            return urls.Select(MapToResponse).ToList();
         }
+
+        /*  public async Task<List<UrlResponse>> SearchAsync(string query)
+          {
+              var urlsQuery = _db.Urls
+                  .Where(x => !x.IsPrivate); // don't expose private
+
+              if (!string.IsNullOrWhiteSpace(query))
+              {
+                  urlsQuery = urlsQuery
+                      .Where(x => x.OriginalUrl.Contains(query));
+              }
+
+              var urls = await urlsQuery.ToListAsync();
+
+              return urls.Select(MapToResponse).ToList();
+          }*/
 
         private UrlResponse MapToResponse(Url u)
         {
